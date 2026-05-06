@@ -1,0 +1,21 @@
+require('dotenv').config();
+const connectDB = require('./config/db');
+const User = require('./models/User');
+
+const seedUsers = async () => {
+    try {
+        await connectDB();
+        await User.deleteMany({});
+        await User.insertMany([
+            {name: 'John Doe', email: 'john@example.com', password: 'password123', address: '123 Main St, New York, NY'},
+            {name: 'Jane Smith', email: 'jane@example.com', password: 'securePass99', address: '456 Oak Ave, Austin, TX'},
+            {name: 'Alice Johnson', email: 'alice@example.com', password: 'alicePassword!', address: '789 Pine Rd, Seattle, WA'}
+        ]);
+        console.log('Successfully added mock registered users!');
+        process.exit(0);
+    } catch(e) {
+        console.error(e);
+        process.exit(1);
+    }
+};
+seedUsers();
